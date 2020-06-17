@@ -9,18 +9,21 @@ private:
 	int priority;
 	int process_num;
 	int order_of_execution;
-	
+
 public:
 	processes() {
 		this->arrival_time = 0;
 		this->burst_time = 0;
 		this->priority = 0;
+		this->process_num = 0;
+		this->order_of_execution = 0;
 	}
-	processes(int arrival_time, int burst_time, int priority, int process_num) {
+	processes(int arrival_time, int burst_time, int priority, int process_num, int order_of_execution) {
 		this->arrival_time = arrival_time;
 		this->burst_time = burst_time;
 		this->priority = priority;
 		this->process_num = process_num;
+		this->order_of_execution = order_of_execution;
 	}
 
 	int get_arrival_time() {
@@ -54,37 +57,29 @@ public:
 		this->order_of_execution = order_of_execution;
 	}
 	void display() {
-		cout << "Position in execution cycle: " << order_of_execution << "\n" << endl;
+		cout << "Position in execution cycle: " << order_of_execution << endl;
 		cout << "process num: " << process_num << endl;
 		cout << "arrival time: " << arrival_time << endl;
 		cout << "burst time: " << burst_time << endl;
-		cout << "priority: " << priority << endl;
+		cout << "priority: " << priority << endl << endl;
 	}
 };
 
 bool compareTwoprocesses(processes a, processes b)
 {
-	// If total marks are not same then 
-	// returns true for higher total 
 	if (a.get_arrival_time() != b.get_arrival_time())
 		return a.get_arrival_time() < b.get_arrival_time();
 
-	// If marks in Maths are not same then 
-	// returns true for higher marks 
 	if (a.get_priority() != b.get_priority())
 		return a.get_priority() < b.get_priority();
 
 	return (a.get_process_num() < b.get_process_num());
 
 }
-// Fills total marks and ranks of all Students 
-void computeRanks(processes a[], int n)
-{
-	// Sort structure array using user defined 
-	// function compareTwoStudents() 
-	sort(a, a + n, compareTwoprocesses);
 
-	// Assigning ranks after sorting 
+void computeOrderOfExecution(processes a[], int n)
+{
+	sort(a, a + n, compareTwoprocesses);
 	for (int i = 0; i < n; i++)
 		a[i].set_order_of_execution(i+1);
 }
@@ -107,14 +102,11 @@ int main() {
 		cin >> temp;
 		Pobj[i].set_priority(temp);
 	}
-	computeRanks(Pobj, num_processes);
+	cout << endl << endl;
+	computeOrderOfExecution(Pobj, num_processes);
 	for (int i = 0; i < num_processes; i++) {
 		Pobj[i].display();
 	}
-
-
-
-
 
 	return 0;
 }
